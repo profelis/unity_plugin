@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.6.0 FATAL_ERROR)
 project(unity_plugin CXX)
 
+include(cmake/apple.cmake)
+
 set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins)
 set(TARGET_DIR_EDITOR ${TARGET_DIR}/Editor)
 set(TARGET_DIR_ANDROID ${TARGET_DIR}/Android/libs/${ANDROID_ABI})
@@ -72,8 +74,21 @@ set(
         ${EXTERNAL_HEADER_FILES}
         ${PLUGIN_SOURCE_FILES}
         ${PLUGIN_HEADER_FILES}
-        Source/sample.h
 )
+
+if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
+    file(GLOB OBJECTIVE_M_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.m)
+    file(GLOB OBJECTIVE_MM_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.mm)
+    file(GLOB OBJECTIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.h)
+
+    set(
+            SOURCES
+            ${OBJECTIVE_M_FILES}
+            ${OBJECTIVE_MM_FILES}
+            ${OBJECTIVE_HEADER_FILES}
+            ${SOURCES}
+    )
+endif ()
 
 if (IOS)
     add_library(${PROJECT_NAME} STATIC ${SOURCES})
@@ -87,6 +102,10 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set_target_properties(${PROJECT_NAME} PROPERTIES BUNDLE TRUE)
 else ()
     add_library(${PROJECT_NAME} MODULE ${SOURCES})
+endif ()
+
+if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
+    ADD_OSX_FRAMEWORK(Foundation ${PROJECT_NAME})
 endif ()
 
 # Enable C++11

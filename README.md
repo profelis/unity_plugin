@@ -6,6 +6,8 @@ Native plugin for "all" unity targets with shared c++ code.
 
 - Supports macOS (+editor), Windows (+editor), iOS, Android
 - Simple and clear build process
+- Shared c++ code
+- Additional Objective-C shared code for ios, mac targets
 
 # Compiling
 
@@ -39,5 +41,4 @@ This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects
 - [android] test x86 library (arm64???)
 - [ios] skip library compilation, just copy src files to Plugin folder
 - [all] debug/release builds
-- [ios] obj-c sample code
 - [ios] swift sample
