@@ -4,6 +4,10 @@
 
 #import "ObjcSample.h"
 
+#if ! __has_feature(objc_arc)
+#error "ARC is off"
+#endif
+
 int objc_abs(int a) {
   ObjectiveMathUtils *utils = [[ObjectiveMathUtils alloc] init];
   return [utils abs:a];
