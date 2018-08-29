@@ -39,7 +39,7 @@ public class TestPlugin : MonoBehaviour
 
     void Start()
     {
-        Label.text = "Start test\n";
+        Label.text = "Start test:\n";
         Label.text += plugin_abs(1) + "\n";
         Label.text += plugin_abs(-2) + "\n";
         Label.text += plugin_sum(-4, 7) + "\n";
@@ -48,6 +48,7 @@ public class TestPlugin : MonoBehaviour
         Label.text += objc_abs(5) + "\n";
         Label.text += objc_sum(5, 1) + "\n";
 #if SWIFT
+        Label.text += "Swift tests:\n";
         var swiftFailed = false;
         try
         {
@@ -63,9 +64,9 @@ public class TestPlugin : MonoBehaviour
         }
         if (swiftFailed)
             Label.text += ("7 Test ended\n");
-#else
+#else // SWIFT
         Label.text += ("7 Test ended\n");
-#endif
+#endif // SWIFT
 
 #else
         Label.text += ("5 Test ended\n");

@@ -129,9 +129,9 @@ if [ "$(uname)" == "Darwin" ]; then
     build_ios
     build_mac
     build_mac_editor
-#    build_android armeabi-v7a
-#    build_android arm64-v8a
-#    build_android x86
+    build_android armeabi-v7a
+    build_android arm64-v8a
+    build_android x86
 else
     build_windows
     build_windows_editor
