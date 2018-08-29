@@ -3,7 +3,7 @@ project(unity_plugin CXX)
 
 include(cmake/apple.cmake)
 
-set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins)
+set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins/unity_plugin)
 set(TARGET_DIR_EDITOR ${TARGET_DIR}/Editor)
 set(TARGET_DIR_ANDROID ${TARGET_DIR}/Android/libs/${ANDROID_ABI})
 set(TARGET_DIR_IOS ${TARGET_DIR}/iOS)
@@ -90,6 +90,23 @@ if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
     )
 endif ()
 
+if (SWIFT)
+    # set(IOS_ARCH arm64)
+    enable_language(Swift)
+    set(CMAKE_Swift_LANGUAGE_VERSION 4.2)
+    file(GLOB SWIFT_FILES ${CMAKE_SOURCE_DIR}/swift/*.swift)
+    file(GLOB SWIFT_MM_FILES ${CMAKE_SOURCE_DIR}/swift/*.mm)
+    file(GLOB SWIFT_H_FILES ${CMAKE_SOURCE_DIR}/swift/*.h)
+
+    set(
+            SOURCES
+            ${SWIFT_FILES}
+            ${SWIFT_MM_FILES}
+            ${SWIFT_H_FILES}
+            ${SOURCES}
+    )
+endif()
+
 if (IOS)
     add_library(${PROJECT_NAME} STATIC ${SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES BUNDLE TRUE)
@@ -105,11 +122,21 @@ else ()
 endif ()
 
 if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
-    ADD_OSX_FRAMEWORK(Foundation ${PROJECT_NAME})
-    # Activate ARC - Automatic Reference Counting
-    target_compile_options(${PROJECT_NAME} PUBLIC "-fobjc-arc")
-    set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
+    if (XCODE)
+        set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
+    else ()
+        ADD_OSX_FRAMEWORK(Foundation ${PROJECT_NAME})
+        # Activate ARC - Automatic Reference Counting
+        target_compile_options(${PROJECT_NAME} PUBLIC "-fobjc-arc")
+    endif ()
 endif ()
+
+if (SWIFT)
+    if (XCODE)
+        set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES "YES")
+        set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@loader_path/../Frameworks")
+    endif()
+endif()
 
 # Enable C++11
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)

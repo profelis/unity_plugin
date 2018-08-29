@@ -1,83 +1,138 @@
 #!/usr/bin/env bash
 
+SWIFT=false
+XCODE=false
+SOURCE=false
+
+OUTPUT_DIR="../Assets/Plugins/unity_plugin"
+
+while getopts ":wxs" o; do
+    case "${o}" in
+        w)
+            SWIFT=true; XCODE=true; ;;
+        x)
+            XCODE=true ;;
+#        s)
+#            SOURCE=true ;;
+        *)
+            echo "Usage: $0 [-w swift] [-x xcode]"; exit 1; ;;
+    esac
+done
+
 set -x
 
-PLUGIN_DIR=`pwd`
-mkdir -p build
-pushd build
+MAC_GENERATOR="Unix Makefiles"
+IOS_GENERATOR="Unix Makefiles"
+if [ "${XCODE}" = true ] ; then
+    MAC_GENERATOR="Xcode"
+    IOS_GENERATOR="Xcode"
+fi
 
-function pre_cmake()
+PLUGIN_DIR=`pwd`
+
+function pre_build()
 {
     BUILD_DIR=$1
     mkdir -p $1
     pushd $1
 }
 
-function post_cmake()
+function post_build()
 {
     popd
 }
+
+function copy_sources()
+{
+    mkdir -p "${OUTPUT_DIR}"
+    cp -r ./Source "${OUTPUT_DIR}"
+    cp -r ./External "${OUTPUT_DIR}"
+    cp -r ./objective_c "${OUTPUT_DIR}"
+    if [ "${SWIFT}" = true ] ; then
+        cp -r ./swift "${OUTPUT_DIR}"
+        cp -r ./swiftResources/ "${OUTPUT_DIR}"
+    fi
+}
+
 function build_ios()
 {
-    pre_cmake ios
-    cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
-#    cmake -G "Xcode" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
-    make
-    post_cmake
+    if [ "${SOURCE}" = true ]; then
+        copy_sources
+    else
+        if [ "${SWIFT}" = true ] ; then
+            mkdir -p "${OUTPUT_DIR}/iOS"
+            cp -r ./swiftResources/ "${OUTPUT_DIR}"
+            # empty swift file - activate swift support in Xcode
+            cp -r ./swiftDummy/ "${OUTPUT_DIR}/iOS"
+        fi
+        pre_build build/ios
+        cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DCMAKE_OSX_ARCHITECTURES=arm64 -DIOS_ARCH=arm64 -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
+        if [ "${IOS_GENERATOR}" = "Unix Makefiles" ] ; then
+            make
+        fi
+        post_build
+    fi
 }
 
 function build_mac()
 {
-    pre_cmake mac
-    cmake -G "Unix Makefiles" ${PLUGIN_DIR}
-#    cmake -G "Xcode" ${PLUGIN_DIR}
-    make
-    post_cmake
+    if [ "${SOURCE}" = true ]; then
+        copy_sources
+    else
+        pre_build build/mac
+        cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} ${PLUGIN_DIR}
+        if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
+            make
+        fi
+        post_build
+    fi
 }
 
 function build_mac_editor()
 {
-    pre_cmake mac_editor
-    cmake -G "Unix Makefiles" -DEDITOR=TRUE ${PLUGIN_DIR}
-#    cmake -G "Xcode" -DEDITOR=TRUE ${PLUGIN_DIR}
-    make
-    post_cmake
+    if [ "${SOURCE}" = true ]; then
+        echo "Editor doesn't support native sources. Force compile dylib"
+    fi
+    pre_build build/mac_editor
+    cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DEDITOR=TRUE ${PLUGIN_DIR}
+    if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
+        make
+    fi
+    post_build
 }
 
 function build_android()
 {
     ANDROID_ABI=$1
-    pre_cmake android/${ANDROID_ABI}
-    cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_HOME}/build/cmake/android.toolchain.cmake -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
+    pre_build build/android/${ANDROID_ABI}
+    cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
     make
-    post_cmake
+    post_build
 }
 
 function build_windows()
 {
-    pre_cmake windows
+    pre_build build/windows
     cmake -G "Visual Studio 15 2017 Win64" ${PLUGIN_DIR}
-    post_cmake
+    post_build
 }
 
 function build_windows_editor()
 {
-    pre_cmake windows_editor
+    pre_build build/windows_editor
     cmake -G "Visual Studio 15 2017 Win64" -DEDITOR=TRUE ${PLUGIN_DIR}
-    post_cmake
+    post_build
 }
 
 
 if [ "$(uname)" == "Darwin" ]; then
-build_ios
-build_mac
-build_mac_editor
-build_android armeabi-v7a
-build_android arm64-v8a
-build_android x86
+    build_ios
+    build_mac
+    build_mac_editor
+#    build_android armeabi-v7a
+#    build_android arm64-v8a
+#    build_android x86
 else
-build_windows
-build_windows_editor
+    build_windows
+    build_windows_editor
 fi
-
-popd

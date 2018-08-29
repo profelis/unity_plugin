@@ -3,6 +3,7 @@
 //
 
 #import "ObjcSample.h"
+#include "ObjectiveMathUtils.h"
 
 #if ! __has_feature(objc_arc)
 #error "ARC is off"
