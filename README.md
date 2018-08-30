@@ -7,8 +7,10 @@ Native plugin for "all" unity targets with shared c++ code.
 - Supports macOS (+editor), Windows (+editor), iOS, Android
 - Simple and clear build process
 - Shared c++ code
-- Sample with Swift code
-- Additional Objective-C shared code for ios, mac targets
+- Shared Objective-C shared code for ios, mac targets
+- Shared Swift code for ios, mac targets
+- Debug/Release configuration
+- Source code sample for iOS target (useful for debug)
 
 ## Compiling
 
@@ -18,7 +20,7 @@ I compile all targets on macOS and use Windows only for windows(+editor) targets
 
 - Setup environment variable `ANDROID_NDK_HOME` target to Android NDK
 - Open `Plugin` folder
-- run `buildall.sh`, special params `[-w add swift sample code] [-x generate xcode projects] [-r Release configuration]`
+- run `buildall.sh`, special params `[-w add swift sample code] [-x generate xcode projects] [-r Release configuration] [-s copy sources for iOS target (useful for debug)]`
 
 #### Swift
 
@@ -31,7 +33,7 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 
 - Install CMake 3.6+, MSVS
 - Open `Plugin` folder
-- run `buildall.bat`
+- run `buildall.bat`, open MSVS projects from `build/windows` and `build/windows_editor`
 
 ### make or MSVS or Xcode
 
@@ -48,4 +50,4 @@ This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects
 
 - [webgl] support webgl target
 - [android] test x86 library (arm64???)
-- [ios] skip library compilation, just copy src files to Plugin folder (WIP)
+- [windows] auto build MSVS projects

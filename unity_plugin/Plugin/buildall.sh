@@ -15,8 +15,8 @@ while getopts ":wxsr" o; do
             XCODE=true; ;;
         r)
             BUILD_TYPE="Release"; ;;
-#        s)
-#            SOURCE=true ;;
+        s)
+            SOURCE=true; ;;
         *)
             echo "Usage: $0 [-w swift] [-x xcode] [-r release]"; exit 1; ;;
     esac
@@ -82,23 +82,22 @@ function build_ios()
 function build_mac()
 {
     if [ "${SOURCE}" = true ]; then
-        copy_sources
-    else
-        pre_build build/mac
-        cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
-        if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
-            make
-        elif [ "${XCODE}" = true ] ; then
-            xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
-        fi
-        post_build
+        echo "OSX doesn't support native sources. Force compile library"
     fi
+    pre_build build/mac
+    cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
+    if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
+        make
+    elif [ "${XCODE}" = true ] ; then
+        xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
+    fi
+    post_build
 }
 
 function build_mac_editor()
 {
     if [ "${SOURCE}" = true ]; then
-        echo "Editor doesn't support native sources. Force compile dylib"
+        echo "Editor doesn't support native sources. Force compile library"
     fi
     pre_build build/mac_editor
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DEDITOR=TRUE ${PLUGIN_DIR}

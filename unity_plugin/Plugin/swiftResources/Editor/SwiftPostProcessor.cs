@@ -23,7 +23,7 @@ public static class SwiftPostProcessor
 
             //// Configure build settings
             proj.SetBuildProperty(targetGuid, "SWIFT_OBJC_BRIDGING_HEADER", "Libraries/Plugins/unity_plugin/Unity-iPhone-Bridging-Header.h");
-            proj.SetBuildProperty(targetGuid, "SWIFT_OBJC_INTERFACE_HEADER_NAME", "ReplayKitUnityBridge-Swift.h");
+            proj.SetBuildProperty(targetGuid, "SWIFT_OBJC_INTERFACE_HEADER_NAME", "unity_plugin-Swift.h");
             proj.SetBuildProperty(targetGuid, "SWIFT_VERSION", "4.2");
             proj.SetBuildProperty(targetGuid, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
             proj.AddBuildProperty(targetGuid, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
