@@ -70,6 +70,9 @@ function build_ios()
         if [ "${IOS_GENERATOR}" = "Unix Makefiles" ] ; then
             make
         fi
+        if [ "${XCODE}" = true ] ; then
+            xcodebuild -configuration "Debug" -target ALL_BUILD build
+        fi
         post_build
     fi
 }
@@ -84,6 +87,9 @@ function build_mac()
         if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
             make
         fi
+        if [ "${XCODE}" = true ] ; then
+            xcodebuild -configuration "Debug" -target ALL_BUILD build
+        fi
         post_build
     fi
 }
@@ -97,6 +103,9 @@ function build_mac_editor()
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DEDITOR=TRUE ${PLUGIN_DIR}
     if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
         make
+    fi
+    if [ "${XCODE}" = true ] ; then
+        xcodebuild -configuration "Debug" -target ALL_BUILD build
     fi
     post_build
 }
