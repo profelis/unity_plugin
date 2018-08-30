@@ -5,7 +5,7 @@ XCODE=false
 SOURCE=false
 BUILD_TYPE="Debug"
 
-OUTPUT_DIR="../Assets/Plugins/unity_plugin"
+OUTPUT_DIR="`pwd`/../Assets/Plugins/unity_plugin"
 
 while getopts ":wxsr" o; do
     case "${o}" in
@@ -69,7 +69,7 @@ function build_ios()
             cp -r ./swiftDummy/ "${OUTPUT_DIR}/iOS"
         fi
         pre_build build/ios
-        cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES=arm64 -DIOS_ARCH=arm64 -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
+        cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
         if [ "${IOS_GENERATOR}" = "Unix Makefiles" ] ; then
             make
         elif [ "${XCODE}" = true ] ; then
@@ -85,7 +85,7 @@ function build_mac()
         copy_sources
     else
         pre_build build/mac
-        cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
+        cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
         if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
             make
         elif [ "${XCODE}" = true ] ; then
@@ -101,7 +101,7 @@ function build_mac_editor()
         echo "Editor doesn't support native sources. Force compile dylib"
     fi
     pre_build build/mac_editor
-    cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DEDITOR=TRUE ${PLUGIN_DIR}
+    cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DEDITOR=TRUE ${PLUGIN_DIR}
     if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
         make
     elif [ "${XCODE}" = true ] ; then
@@ -114,7 +114,7 @@ function build_android()
 {
     ANDROID_ABI=$1
     pre_build build/android/${ANDROID_ABI}
-    cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
+    cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
     make
     post_build
 }
@@ -122,14 +122,14 @@ function build_android()
 function build_windows()
 {
     pre_build build/windows
-    cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
+    cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_DIR="${OUTPUT_DIR}" ${PLUGIN_DIR}
     post_build
 }
 
 function build_windows_editor()
 {
     pre_build build/windows_editor
-    cmake -G "Visual Studio 15 2017 Win64" -DEDITOR=TRUE -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
+    cmake -G "Visual Studio 15 2017 Win64" -DEDITOR=TRUE -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_DIR="${OUTPUT_DIR}" ${PLUGIN_DIR}
     post_build
 }
 

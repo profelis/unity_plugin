@@ -3,12 +3,16 @@ project(unity_plugin CXX)
 
 include(cmake/apple.cmake)
 
-IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
+if (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
     SET(CMAKE_BUILD_TYPE Debug)
-ENDIF()
-MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+endif ()
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
-set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins/unity_plugin)
+if (NOT DEFINED TARGET_DIR)
+    set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins/unity_plugin)
+endif ()
+message(STATUS "Target dir: ${TARGET_DIR}")
+
 set(TARGET_DIR_EDITOR ${TARGET_DIR}/Editor)
 set(TARGET_DIR_ANDROID ${TARGET_DIR}/Android/libs/${ANDROID_ABI})
 set(TARGET_DIR_IOS ${TARGET_DIR}/iOS)
@@ -110,12 +114,12 @@ if (SWIFT)
             ${SWIFT_H_FILES}
             ${SOURCES}
     )
-endif()
+endif ()
 
 if (IOS)
     add_library(${PROJECT_NAME} STATIC ${SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES BUNDLE TRUE)
-#    set_xcode_property(${PROJECT_NAME} ENABLE_BITCODE "NO")
+    #    set_xcode_property(${PROJECT_NAME} ENABLE_BITCODE "NO")
 elseif (ANDROID_NDK)
     add_library(${PROJECT_NAME} MODULE ${SOURCES})
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -140,8 +144,8 @@ if (SWIFT)
     if (XCODE)
         set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES "YES")
         set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@loader_path/../Frameworks")
-    endif()
-endif()
+    endif ()
+endif ()
 
 # Enable C++11
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
