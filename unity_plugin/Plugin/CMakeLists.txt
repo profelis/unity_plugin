@@ -3,6 +3,11 @@ project(unity_plugin CXX)
 
 include(cmake/apple.cmake)
 
+IF (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
+    SET(CMAKE_BUILD_TYPE Debug)
+ENDIF()
+MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
 set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins/unity_plugin)
 set(TARGET_DIR_EDITOR ${TARGET_DIR}/Editor)
 set(TARGET_DIR_ANDROID ${TARGET_DIR}/Android/libs/${ANDROID_ABI})
