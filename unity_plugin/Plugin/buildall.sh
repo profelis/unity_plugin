@@ -69,7 +69,7 @@ function build_ios()
             cp -r ./swiftDummy/ "${OUTPUT_DIR}/iOS"
         fi
         pre_build build/ios
-        cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
+        cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} "-DCMAKE_OSX_ARCHITECTURES=arm64;armv7" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
         if [ "${IOS_GENERATOR}" = "Unix Makefiles" ] ; then
             make VERBOSE=1
         elif [ "${XCODE}" = true ] ; then
