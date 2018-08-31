@@ -71,7 +71,7 @@ function build_ios()
         pre_build build/ios
         cmake -G "${IOS_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="" -DCMAKE_TOOLCHAIN_FILE=${PLUGIN_DIR}/iOS.cmake ${PLUGIN_DIR}
         if [ "${IOS_GENERATOR}" = "Unix Makefiles" ] ; then
-            make
+            make VERBOSE=1
         elif [ "${XCODE}" = true ] ; then
             xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
         fi
@@ -87,7 +87,7 @@ function build_mac()
     pre_build build/mac
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
     if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
-        make
+        make VERBOSE=1
     elif [ "${XCODE}" = true ] ; then
         xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
     fi
@@ -102,7 +102,7 @@ function build_mac_editor()
     pre_build build/mac_editor
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DEDITOR=TRUE ${PLUGIN_DIR}
     if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
-        make
+        make VERBOSE=1
     elif [ "${XCODE}" = true ] ; then
         xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
     fi
@@ -114,7 +114,7 @@ function build_android()
     ANDROID_ABI=$1
     pre_build build/android/${ANDROID_ABI}
     cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
-    make
+    make VERBOSE=1
     post_build
 }
 
