@@ -23,6 +23,7 @@ while getopts ":wxsr" o; do
 done
 
 set -x
+set -e
 
 MAC_GENERATOR="Unix Makefiles"
 IOS_GENERATOR="Unix Makefiles"
