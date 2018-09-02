@@ -69,14 +69,14 @@ endif ()
 
 # Set include directories
 include_directories(
-        ${CMAKE_SOURCE_DIR}/External/include
-        ${CMAKE_SOURCE_DIR}/Source)
+        ${CMAKE_SOURCE_DIR}/external/include
+        ${CMAKE_SOURCE_DIR}/source)
 
-file(GLOB EXTERNAL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/External/src/*.cpp)
-file(GLOB EXTERNAL_HEADER_FILES ${CMAKE_SOURCE_DIR}/External/include/*.h)
+file(GLOB EXTERNAL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/external/src/*.cpp)
+file(GLOB EXTERNAL_HEADER_FILES ${CMAKE_SOURCE_DIR}/external/include/*.h)
 
-file(GLOB PLUGIN_SOURCE_FILES ${CMAKE_SOURCE_DIR}/Source/*.cpp)
-file(GLOB PLUGIN_HEADER_FILES ${CMAKE_SOURCE_DIR}/Source/*.h)
+file(GLOB PLUGIN_SOURCE_FILES ${CMAKE_SOURCE_DIR}/source/*.cpp)
+file(GLOB PLUGIN_HEADER_FILES ${CMAKE_SOURCE_DIR}/source/*.h)
 set(
         SOURCES
         ${EXTERNAL_SOURCE_FILES}
