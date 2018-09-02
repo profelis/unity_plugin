@@ -73,10 +73,10 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/source)
 
 file(GLOB EXTERNAL_SOURCE_FILES ${CMAKE_SOURCE_DIR}/external/src/*.cpp)
-file(GLOB EXTERNAL_HEADER_FILES ${CMAKE_SOURCE_DIR}/external/include/*.h)
+file(GLOB EXTERNAL_HEADER_FILES ${CMAKE_SOURCE_DIR}/external/include/*.h ${CMAKE_SOURCE_DIR}/external/include/*.hpp)
 
 file(GLOB PLUGIN_SOURCE_FILES ${CMAKE_SOURCE_DIR}/source/*.cpp)
-file(GLOB PLUGIN_HEADER_FILES ${CMAKE_SOURCE_DIR}/source/*.h)
+file(GLOB PLUGIN_HEADER_FILES ${CMAKE_SOURCE_DIR}/source/*.h ${CMAKE_SOURCE_DIR}/source/*.hpp)
 set(
         SOURCES
         ${EXTERNAL_SOURCE_FILES}
@@ -86,14 +86,12 @@ set(
 )
 
 if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
-    file(GLOB OBJECTIVE_M_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.m)
-    file(GLOB OBJECTIVE_MM_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.mm)
-    file(GLOB OBJECTIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.h)
+    file(GLOB OBJECTIVE_SOURCE_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.m ${CMAKE_SOURCE_DIR}/objective_c/*.mm)
+    file(GLOB OBJECTIVE_HEADER_FILES ${CMAKE_SOURCE_DIR}/objective_c/*.h ${CMAKE_SOURCE_DIR}/objective_c/*.hpp)
 
     set(
             SOURCES
-            ${OBJECTIVE_M_FILES}
-            ${OBJECTIVE_MM_FILES}
+            ${OBJECTIVE_SOURCE_FILES}
             ${OBJECTIVE_HEADER_FILES}
             ${SOURCES}
     )
@@ -103,15 +101,15 @@ if (SWIFT)
     # set(IOS_ARCH arm64)
     enable_language(Swift)
     set(CMAKE_Swift_LANGUAGE_VERSION 4.2)
-    file(GLOB SWIFT_FILES ${CMAKE_SOURCE_DIR}/swift/*.swift)
-    file(GLOB SWIFT_MM_FILES ${CMAKE_SOURCE_DIR}/swift/*.mm)
-    file(GLOB SWIFT_H_FILES ${CMAKE_SOURCE_DIR}/swift/*.h)
+    file(GLOB SWIFT_SOURCE_FILES ${CMAKE_SOURCE_DIR}/swift/*.swift)
+    file(GLOB SWIFT_CPP_SOURCE_FILES ${CMAKE_SOURCE_DIR}/swift/*.mm ${CMAKE_SOURCE_DIR}/objective_c/*.m ${CMAKE_SOURCE_DIR}/objective_c/*.cpp)
+    file(GLOB SWIFT_HEADER_FILES ${CMAKE_SOURCE_DIR}/swift/*.h ${CMAKE_SOURCE_DIR}/swift/*.hpp)
 
     set(
             SOURCES
-            ${SWIFT_FILES}
-            ${SWIFT_MM_FILES}
-            ${SWIFT_H_FILES}
+            ${SWIFT_SOURCE_FILES}
+            ${SWIFT_CPP_SOURCE_FILES}
+            ${SWIFT_HEADER_FILES}
             ${SOURCES}
     )
 endif ()
