@@ -142,9 +142,11 @@ endif ()
 
 if (SWIFT)
     if (XCODE)
-        # force setup arch and deploy target for swift module
-        set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
-        set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ARCHS "arm64 armv7")
+        if (IOS)
+            # force setup arch and deploy target for swift module
+            set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IOS_DEPLOYMENT_TARGET})
+            set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ARCHS "arm64 armv7")
+        endif ()
 
         set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES "YES")
         set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@loader_path/../Frameworks")

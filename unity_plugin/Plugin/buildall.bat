@@ -6,6 +6,8 @@ call :build_windows
 call :build_windows_editor
 popd
 
+echo "Done."
+
 EXIT /B 0
 
 :build_windows

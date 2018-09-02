@@ -150,3 +150,5 @@ else
     build_windows
     build_windows_editor
 fi
+
+echo "Done."
