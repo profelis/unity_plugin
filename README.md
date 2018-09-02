@@ -19,7 +19,7 @@ I compile all targets on macOS and use Windows only for windows(+editor) targets
 ### macOS
 
 - Setup environment variable `ANDROID_NDK_HOME` target to Android NDK
-- Open `Plugin` folder
+- Open `plugin` folder
 - run `buildall.sh`, special params `[-w add swift sample code] [-x generate xcode projects] [-r Release configuration] [-s copy sources for iOS target (useful for debug)]`
 
 #### Swift
@@ -32,7 +32,7 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 ### windows
 
 - Install CMake 3.6+, MSVS
-- Open `Plugin` folder
+- Open `plugin` folder
 - run `buildall.bat`, open MSVS projects from `build/windows` and `build/windows_editor`
 
 ### make or MSVS or Xcode
