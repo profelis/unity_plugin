@@ -9,7 +9,7 @@ endif ()
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 if (NOT DEFINED TARGET_DIR)
-    set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../Assets/Plugins/unity_plugin)
+    set(TARGET_DIR ${CMAKE_SOURCE_DIR}/../unity_project/Assets/Plugins/unity_plugin)
 endif ()
 message(STATUS "Target dir: ${TARGET_DIR}")
 

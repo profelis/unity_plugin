@@ -5,7 +5,7 @@ XCODE=false
 SOURCE=false
 BUILD_TYPE="Debug"
 
-OUTPUT_DIR="`pwd`/../Assets/Plugins/unity_plugin"
+OUTPUT_DIR="`pwd`/../unity_project/Assets/Plugins/unity_plugin"
 
 while getopts ":wxsr" o; do
     case "${o}" in
