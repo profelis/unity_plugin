@@ -39,14 +39,14 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 
 This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects for windows, but theoretically you can generate Xcode projects for ios and mac targets. See `Plugin/buildall.[sh|bat]` for more information.
 
-## MORE INFO
+## More info
 
 - [UnityNativeScripting](https://github.com/jacksondunstan/UnityNativeScripting) and [articles](https://jacksondunstan.com/articles/3938) by Jackson Dunstan
 - Unity manuals [iOS native plugins](https://docs.unity3d.com/Manual/PluginsForIOS.html) and [Android native plugins](https://docs.unity3d.com/Manual/AndroidNativePlugins.html)
 - [Android CMake guide](https://developer.android.com/ndk/guides/cmake) and [ABI management](https://developer.android.com/ndk/guides/abis)
 - [Unity — How to Build a Bridge: iOS to Unity with Swift](https://medium.com/@SoCohesive/unity-how-to-build-a-bridge-ios-to-unity-with-swift-f23653f6261)
 
-## TODO
+## Todo
 
 - [webgl] support webgl target
 - [android] test x86 library (arm64???)
