@@ -51,3 +51,4 @@ This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects
 - [webgl] support webgl target
 - [android] test x86 library (arm64???)
 - [windows] auto build MSVS projects
+- [windows] compile x86/64 dlls

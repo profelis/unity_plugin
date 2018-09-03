@@ -661,7 +661,9 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: SWIFT
+    4: SWIFT
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
