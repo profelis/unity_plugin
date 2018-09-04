@@ -92,11 +92,7 @@ function build_mac()
     fi
     pre_build build/mac
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${XCODE} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
-    if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
-        make VERBOSE=1
-    elif [ "${XCODE}" = true ] ; then
-        xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
-    fi
+    cmake --build . --config ${BUILD_TYPE}
     post_build
 }
 
@@ -107,11 +103,7 @@ function build_mac_editor()
     fi
     pre_build build/mac_editor
     cmake -G "${MAC_GENERATOR}" -DSWIFT=${SWIFT} -DXCODE=${SWIFT} -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DEDITOR=TRUE ${PLUGIN_DIR}
-    if [ "${MAC_GENERATOR}" = "Unix Makefiles" ] ; then
-        make VERBOSE=1
-    elif [ "${XCODE}" = true ] ; then
-        xcodebuild -configuration "${BUILD_TYPE}" -target ALL_BUILD build
-    fi
+    cmake --build . --config ${BUILD_TYPE}
     post_build
 }
 
@@ -120,7 +112,7 @@ function build_android()
     ANDROID_ABI=$1
     pre_build build/android/${ANDROID_ABI}
     cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake -DTARGET_DIR="${OUTPUT_DIR}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DANDROID_ABI=${ANDROID_ABI} ${PLUGIN_DIR}
-    make VERBOSE=1
+    cmake --build . --config ${BUILD_TYPE}
     post_build
 }
 
@@ -128,6 +120,7 @@ function build_windows()
 {
     pre_build build/windows
     cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_DIR="${OUTPUT_DIR}" ${PLUGIN_DIR}
+    cmake --build . --config ${BUILD_TYPE}
     post_build
 }
 
@@ -135,6 +128,7 @@ function build_windows_editor()
 {
     pre_build build/windows_editor
     cmake -G "Visual Studio 15 2017 Win64" -DEDITOR=TRUE -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DTARGET_DIR="${OUTPUT_DIR}" ${PLUGIN_DIR}
+    cmake --build . --config ${BUILD_TYPE}
     post_build
 }
 

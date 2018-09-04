@@ -37,7 +37,7 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 
 ### make or MSVS or Xcode
 
-This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects for windows, but theoretically you can generate Xcode projects for ios and mac targets. See `Plugin/buildall.[sh|bat]` for more information.
+See `Plugin/buildall.[sh|bat]` for more information.
 
 ## More info
 

@@ -25,6 +25,8 @@
 * OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#import "ObjectiveMathUtils.h"
+
 @implementation ObjectiveMathUtils
 
 - (int)abs:(int)a {
