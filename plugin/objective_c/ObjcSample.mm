@@ -25,6 +25,7 @@
 * OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#import "ObjcSample.h"
 #include "ObjectiveMathUtils.h"
 
 #if !__has_feature(objc_arc)
