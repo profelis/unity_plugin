@@ -129,10 +129,10 @@ else ()
 endif ()
 
 if (NOT ANDROID_NDK AND (IOS OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")))
+    ADD_OSX_FRAMEWORK(Foundation ${PROJECT_NAME})
     if (XCODE)
         set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES")
     else ()
-        ADD_OSX_FRAMEWORK(Foundation ${PROJECT_NAME})
         # Activate ARC - Automatic Reference Counting
         target_compile_options(${PROJECT_NAME} PUBLIC "-fobjc-arc")
     endif ()
