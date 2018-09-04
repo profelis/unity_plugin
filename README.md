@@ -33,7 +33,7 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 
 - Install CMake 3.6+, MSVS
 - Open `plugin` folder
-- run `buildall.bat`, open MSVS projects from `build/windows` and `build/windows_editor`
+- run `buildall.bat`, special params `[-r Release configuration]`
 
 ### make or MSVS or Xcode
 
@@ -50,5 +50,3 @@ This project is just a sample, I use "Unix Makefiles" on macOS and MSVS projects
 
 - [webgl] support webgl target
 - [android] test x86 library (arm64???)
-- [windows] auto build MSVS projects
-- [windows] compile x86/64 dlls
