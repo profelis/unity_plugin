@@ -4,7 +4,7 @@ Native plugin for "all" unity targets with shared c++ code.
 
 ## Main features
 
-- Supports macOS (+editor), Windows (+editor), iOS, Android
+- Supports macOS (+editor), Windows (+UWP) (+editor), iOS, Android
 - Simple and clear build process
 - Shared c++ code
 - Shared Objective-C shared code for ios, mac targets
