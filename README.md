@@ -14,7 +14,7 @@ Native plugin for "all" unity targets with shared c++ code.
 
 ## Compiling
 
-I compile all targets on macOS and use Windows only for windows(+editor) targets. 
+I compile all targets on macOS and use Windows only for windows targets. 
 
 ### macOS
 
@@ -31,13 +31,13 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 
 ### windows
 
-- Install CMake 3.6+, MSVS
+- Install CMake 3.6+, MSVS, UWP SDK (optional)
 - Open `plugin` folder
 - run `buildall.bat`, special params `[-r Release configuration]`
 
 ### make or MSVS or Xcode
 
-See `Plugin/buildall.[sh|bat]` for more information.
+See `plugin/buildall.[sh|bat]` for more information.
 
 ## More info
 
