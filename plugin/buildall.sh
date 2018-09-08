@@ -3,11 +3,12 @@
 SWIFT=false
 XCODE=false
 SOURCE=false
+WEBGL=false
 BUILD_TYPE="Debug"
 
 OUTPUT_DIR="`pwd`/../unity_project/Assets/Plugins/unity_plugin"
 
-while getopts ":wxsr" o; do
+while getopts ":wxsrl" o; do
     case "${o}" in
         w)
             SWIFT=true; XCODE=true; ;;
@@ -17,6 +18,8 @@ while getopts ":wxsr" o; do
             BUILD_TYPE="Release"; ;;
         s)
             SOURCE=true; ;;
+        l)
+            WEBGL=true; ;;
         *)
             echo "Usage: $0 [-w swift] [-x xcode] [-r release]"; exit 1; ;;
     esac
@@ -107,6 +110,18 @@ function build_mac_editor()
     post_build
 }
 
+function build_emscripten()
+{
+    if [ "${SOURCE}" = true ]; then
+        copy_sources
+    else
+        pre_build build/webgl
+        emcmake cmake -G "Unix Makefiles" -DSWIFT=${SWIFT} -DEMSCRIPTEN=TRUE -DTARGET_DIR="${OUTPUT_DIR}" -DEMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES=TRUE -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${PLUGIN_DIR}
+        emmake make VERBOSE=1
+        post_build
+    fi
+}
+
 function build_android()
 {
     ANDROID_ABI=$1
@@ -140,6 +155,9 @@ if [ "$(uname)" == "Darwin" ]; then
     build_android armeabi-v7a
     build_android arm64-v8a
     build_android x86
+if [ "${WEBGL}" = true ] ; then
+    build_emscripten
+fi
 else
     build_windows
     build_windows_editor

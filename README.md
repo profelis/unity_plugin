@@ -4,7 +4,7 @@ Native plugin for "all" unity targets with shared c++ code.
 
 ## Main features
 
-- Supports macOS (+editor), Windows (+UWP) (+editor), iOS, Android
+- Supports macOS (+editor), Windows (+UWP) (+editor), iOS, Android, WebGL
 - Simple and clear build process
 - Shared c++ code
 - Shared Objective-C shared code for ios, mac targets
@@ -20,7 +20,7 @@ I compile all targets on macOS and use Windows only for windows targets.
 
 - Setup environment variable `ANDROID_NDK_HOME` target to Android NDK
 - Open `plugin` folder
-- run `buildall.sh`, special params `[-w add swift sample code] [-x generate xcode projects] [-r Release configuration] [-s copy sources for iOS target (useful for debug)]`
+- run `buildall.sh`, special params `[-w add swift sample code] [-x generate xcode projects] [-r Release configuration] [-s copy sources for iOS target (useful for debug)] [-l webgl build]`
 
 #### Swift
 
@@ -29,7 +29,22 @@ I compile all targets on macOS and use Windows only for windows targets.
 
 MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES`)
 
-### windows
+### WebGL static library (WIP)
+
+Can't get working *.bc library right now (WIP)
+```
+opt: error loading file '<projectpath>/Assets/Plugins/unity_plugin/webgl/libunity_plugin.bc'ERROR:root:Failed to run llvm optimizations: 
+   UnityEngine.GUIUtility:ProcessEvent(Int32, IntPtr)
+```
+
+- Install [Emscripten](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)
+- Activate Emscripten `source ./emsdk_env.sh`
+
+### WebGL sources
+
+`buildall.sh -l -s` works perfect, some include directives fail sometimes, simple place all *.cpp and *.h files in root Plugins folder
+
+### Windows
 
 - Install CMake 3.6+, MSVS, UWP SDK (optional)
 - Open `plugin` folder
@@ -45,8 +60,11 @@ See `plugin/buildall.[sh|bat]` for more information.
 - Unity manuals [iOS native plugins](https://docs.unity3d.com/Manual/PluginsForIOS.html) and [Android native plugins](https://docs.unity3d.com/Manual/AndroidNativePlugins.html)
 - [Android CMake guide](https://developer.android.com/ndk/guides/cmake) and [ABI management](https://developer.android.com/ndk/guides/abis)
 - [Unity — How to Build a Bridge: iOS to Unity with Swift](https://medium.com/@SoCohesive/unity-how-to-build-a-bridge-ios-to-unity-with-swift-f23653f6261)
+- [Emscripten](https://kripken.github.io/emscripten-site/index.html)
+- [Building Emscripten project](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html)
+- [How to use native libraries on Node.js with Emscripten](https://willowtreeapps.com/ideas/how-to-use-native-libraries-on-node-js-with-emscripten)
 
 ## Todo
 
-- [webgl] support webgl target
-- [android] test x86 library (arm64???)
+- [android] test x86 library
+- [webgl] static library

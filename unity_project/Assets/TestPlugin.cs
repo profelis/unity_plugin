@@ -34,9 +34,7 @@ public class TestPlugin : MonoBehaviour
 {
     public Text Label;
 
-#if !UNITY_EDITOR && UNITY_IOS
-    const string PLUGIN_NAME = "__Internal";
-#elif !UNITY_EDITOR && UNITY_WEBGL
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_WEBGL || UNITY_WEBGL_API)
     const string PLUGIN_NAME = "__Internal";
 #else
     const string PLUGIN_NAME = "unity_plugin";
