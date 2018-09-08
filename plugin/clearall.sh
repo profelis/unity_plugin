@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 if [ "$(uname)" == "Darwin" ]; then
 rm -rf build/ios
 rm -rf build/mac
