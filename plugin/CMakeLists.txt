@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.6.0 FATAL_ERROR)
 project(unity_plugin CXX)
 
 include(cmake/apple.cmake)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 if (NOT (${CMAKE_BUILD_TYPE} MATCHES Release))
     SET(CMAKE_BUILD_TYPE Debug)
