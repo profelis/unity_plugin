@@ -32,7 +32,8 @@ MacOS(+editor) dylibs are huge because contains all swift dylibs (see `ALWAYS_EM
 ### WebGL static library (WIP)
 
 Can't get working *.bc library right now (WIP)
-```
+
+```text
 opt: error loading file '<projectpath>/Assets/Plugins/unity_plugin/webgl/libunity_plugin.bc'ERROR:root:Failed to run llvm optimizations: 
    UnityEngine.GUIUtility:ProcessEvent(Int32, IntPtr)
 ```
