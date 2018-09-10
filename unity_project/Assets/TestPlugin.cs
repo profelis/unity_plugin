@@ -27,6 +27,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +46,19 @@ public class TestPlugin : MonoBehaviour
 
     [DllImport(PLUGIN_NAME)]
     static extern int plugin_sum(int a, int b);
+
+    [DllImport(PLUGIN_NAME)]
+    static extern bool isEqualsString([MarshalAs(UnmanagedType.LPStr)] string a, [MarshalAs(UnmanagedType.LPStr)] string b);
+
+    [DllImport(PLUGIN_NAME)]
+    [return: MarshalAs(UnmanagedType.LPStr)]
+    static extern string getString();
+
+    [DllImport(PLUGIN_NAME)]
+    static extern void getStringTo(StringBuilder str, int strLength);
+
+    [DllImport(PLUGIN_NAME)]
+    static extern IntPtr getConstString();
 
 #if UNITY_EDITOR_OSX || UNITY_IOS || UNITY_STANDALONE_OSX
     [DllImport(PLUGIN_NAME)]
@@ -85,16 +99,32 @@ public class TestPlugin : MonoBehaviour
         {
             Debug.Log(e);
             swiftFailed = true;
-            Label.text += ("swift test failed\n");
+            Label.text += "swift test failed\n";
         }
         if (swiftFailed)
-            Label.text += ("7 Test ended\n");
+            Label.text += "7 Math Test ended\n";
 #else // SWIFT
-        Label.text += ("7 Test ended\n");
+        Label.text += "7 Math Test ended\n";
 #endif // SWIFT
 
 #else
-        Label.text += ("5 Test ended\n");
+        Label.text += "5 Math Test ended\n";
 #endif
+
+        Label.text += "\nStart string tests:\n";
+
+        Label.text += string.Format("equals {0} and not equals {1}\n", isEqualsString("foo", "foo"), isEqualsString("foo", "FOO"));
+
+        var dynamicString = getString();
+        Label.text += string.Format("getString returns: {0} correct: {1}\n", dynamicString, dynamicString.Equals("Dynamic string"));
+
+        var sb = new StringBuilder(200);
+        getStringTo(sb, sb.Capacity);
+        Label.text += string.Format("StringBuilder contains {0} correct: {1}\n", sb, sb.ToString().Equals("Hello from c++"));
+
+        var constString = MarshalingCommon.PtrToAnsiString(getConstString());
+        Label.text += string.Format("const string: {0} correct: {1}\n", constString, constString.Equals("some const string"));
+
+        Label.text += "String test ended\n";
     }
 }

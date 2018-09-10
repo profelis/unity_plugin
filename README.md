@@ -61,9 +61,11 @@ See `plugin/buildall.[sh|bat]` for more information.
 - Unity manuals [iOS native plugins](https://docs.unity3d.com/Manual/PluginsForIOS.html) and [Android native plugins](https://docs.unity3d.com/Manual/AndroidNativePlugins.html)
 - [Android CMake guide](https://developer.android.com/ndk/guides/cmake) and [ABI management](https://developer.android.com/ndk/guides/abis)
 - [Unity — How to Build a Bridge: iOS to Unity with Swift](https://medium.com/@SoCohesive/unity-how-to-build-a-bridge-ios-to-unity-with-swift-f23653f6261)
+- [Integrating native iOS code into Unity](https://medium.com/@rolir00li/integrating-native-ios-code-into-unity-e844a6131c21)
 - [Emscripten](https://kripken.github.io/emscripten-site/index.html)
 - [Building Emscripten project](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html)
 - [How to use native libraries on Node.js with Emscripten](https://willowtreeapps.com/ideas/how-to-use-native-libraries-on-node-js-with-emscripten)
+- [Interop with Native Libraries](https://www.mono-project.com/docs/advanced/pinvoke/#manual-marshaling)
 
 ## Todo
 

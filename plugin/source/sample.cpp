@@ -26,15 +26,37 @@
 * OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <cstring>
 #include "MathUtils.h"
 #include "sample.h"
 
 extern "C" int UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API plugin_abs(int a) {
-  MathUtils utils;
-  return utils.Abs(a);
+    MathUtils utils;
+    return utils.Abs(a);
 }
 
 extern "C" int UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API plugin_sum(int a, int b) {
-  MathUtils utils;
-  return utils.Sum(a, b);
+    MathUtils utils;
+    return utils.Sum(a, b);
+}
+
+extern "C" bool UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API isEqualsString(const char *a, const char *b) {
+    return strcmp(a, b) == 0;
+}
+
+extern "C" const char* UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API getString()
+{
+    char* str = new char[200];
+    strcpy(str, "Dynamic string");
+    return str;
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API getStringTo(char* str, size_t strLength)
+{
+    strncpy(str, "Hello from c++", strLength);
+}
+
+extern "C" const char* UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API getConstString()
+{
+    return "some const string";
 }

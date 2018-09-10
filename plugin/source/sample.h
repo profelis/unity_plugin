@@ -41,7 +41,3 @@
 #define UNITY_INTERFACE_API
 #define UNITY_INTERFACE_EXPORT
 #endif
-
-extern "C" int UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API plugin_abs(int a);
-
-extern "C" int UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API plugin_sum(int a, int b);
