@@ -27,6 +27,7 @@
 */
 
 #include <cstring>
+#include <cassert>
 #include "MathUtils.h"
 #include "sample.h"
 
@@ -59,4 +60,20 @@ extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API getStringTo(char* str
 extern "C" const char* UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API getConstString()
 {
     return "some const string";
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API WriteIntArray(int *array, int length)
+{
+    assert(length == 3);
+    array[0] = length - 2;
+    array[1] = length - 1;
+    array[2] = length;
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API WriteVector3Array(Vector3 *array, int length)
+{
+    assert(length == 3);
+    array[0] = Vector3{1, 0, 0};
+    array[1] = Vector3{0, 1, 0};
+    array[2] = Vector3{0, 0, 1};
 }

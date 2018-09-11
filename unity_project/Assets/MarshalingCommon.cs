@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 /// Common marshaling utils
 /// https://www.mono-project.com/docs/advanced/pinvoke/#manual-marshaling
 /// </summary>
-public class MarshalingCommon
+public static class MarshalingCommon
 {
     public static string PtrToAnsiString(IntPtr p)
     {
@@ -60,7 +60,6 @@ public class MarshalingCommon
         if (stringArray == IntPtr.Zero)
             return new string[] { };
 
-
         int argc = CountStrings(stringArray);
         return PtrToStringArray(argc, stringArray, transformer);
     }
@@ -73,14 +72,12 @@ public class MarshalingCommon
         return count;
     }
 
-
-    public static string[] PtrToStringArray(int count, IntPtr stringArray, Func<IntPtr, string> transformer)
+    private static string[] PtrToStringArray(int count, IntPtr stringArray, Func<IntPtr, string> transformer)
     {
         if (count < 0)
             throw new ArgumentOutOfRangeException("count", "< 0");
         if (stringArray == IntPtr.Zero)
             return new string[count];
-
 
         string[] members = new string[count];
         for (int i = 0; i < count; ++i)

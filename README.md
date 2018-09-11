@@ -66,6 +66,7 @@ See `plugin/buildall.[sh|bat]` for more information.
 - [Building Emscripten project](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html)
 - [How to use native libraries on Node.js with Emscripten](https://willowtreeapps.com/ideas/how-to-use-native-libraries-on-node-js-with-emscripten)
 - [Interop with Native Libraries](https://www.mono-project.com/docs/advanced/pinvoke/#manual-marshaling)
+- [unity-native-array](https://github.com/keijiro/unity-native-array) by keijiro - example with array marshaling
 
 ## Todo
 

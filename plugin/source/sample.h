@@ -41,3 +41,9 @@
 #define UNITY_INTERFACE_API
 #define UNITY_INTERFACE_EXPORT
 #endif
+
+typedef struct Vector3 {
+    float x;
+    float y;
+    float z;
+} Vector3;

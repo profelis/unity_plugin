@@ -60,6 +60,12 @@ public class TestPlugin : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     static extern IntPtr getConstString();
 
+    [DllImport(PLUGIN_NAME)]
+    static extern void WriteIntArray(int[] array, int length);
+
+    [DllImport(PLUGIN_NAME)]
+    static extern void WriteVector3Array(IntPtr array, int length);
+
 #if UNITY_EDITOR_OSX || UNITY_IOS || UNITY_STANDALONE_OSX
     [DllImport(PLUGIN_NAME)]
     static extern int objc_abs(int a);
@@ -126,5 +132,20 @@ public class TestPlugin : MonoBehaviour
         Label.text += string.Format("const string: {0} correct: {1}\n", constString, constString.Equals("some const string"));
 
         Label.text += "String test ended\n";
+
+        Label.text += "Arrays test start:\n";
+
+        var intArray = new int [3];
+        WriteIntArray(intArray, intArray.Length);
+        var valid = intArray[0] == 1 && intArray[1] == 2 && intArray[2] == 3;
+        Label.text += string.Format("int array:{0}, {1}, {2} correct: {3}\n", intArray[0], intArray[1], intArray[2], valid);
+
+        var vector3Array = new Vector3 [3];
+        var vector3ArrayHandle = GCHandle.Alloc(vector3Array, GCHandleType.Pinned);
+        WriteVector3Array(vector3ArrayHandle.AddrOfPinnedObject(), vector3Array.Length);
+        Label.text += string.Format("vec3 array:{0}, {1}, {2} \n", vector3Array[0], vector3Array[1], vector3Array[2]);
+        vector3ArrayHandle.Free();
+
+        Label.text += "Arrays test ended\n";
     }
 }
