@@ -14,7 +14,7 @@ Native plugin for "all" unity targets with shared c++ code.
 
 ## Compiling
 
-I compile all targets on macOS and use Windows only for windows targets. 
+I compile all targets on macOS and use Windows only for windows targets.
 
 ### macOS
 
@@ -58,15 +58,30 @@ See `plugin/buildall.[sh|bat]` for more information.
 ## More info
 
 - [UnityNativeScripting](https://github.com/jacksondunstan/UnityNativeScripting) and [articles](https://jacksondunstan.com/articles/3938) by Jackson Dunstan
-- Unity manuals [iOS native plugins](https://docs.unity3d.com/Manual/PluginsForIOS.html) and [Android native plugins](https://docs.unity3d.com/Manual/AndroidNativePlugins.html)
-- [Android CMake guide](https://developer.android.com/ndk/guides/cmake) and [ABI management](https://developer.android.com/ndk/guides/abis)
-- [Unity — How to Build a Bridge: iOS to Unity with Swift](https://medium.com/@SoCohesive/unity-how-to-build-a-bridge-ios-to-unity-with-swift-f23653f6261)
+
+### iOS & MacOS
+
+- Unity3D manual [iOS native plugins](https://docs.unity3d.com/Manual/PluginsForIOS.html)
 - [Integrating native iOS code into Unity](https://medium.com/@rolir00li/integrating-native-ios-code-into-unity-e844a6131c21)
+- [Unity — How to Build a Bridge: iOS to Unity with Swift](https://medium.com/@SoCohesive/unity-how-to-build-a-bridge-ios-to-unity-with-swift-f23653f6261)
+
+### Android
+
+- Unity3D manual [Native c++ plugins for Android](https://docs.unity3d.com/Manual/AndroidNativePlugins.html)
+- [Android CMake guide](https://developer.android.com/ndk/guides/cmake)
+- [ABI management](https://developer.android.com/ndk/guides/abis)
+
+### WebGL
+
 - [Emscripten](https://kripken.github.io/emscripten-site/index.html)
 - [Building Emscripten project](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html)
 - [How to use native libraries on Node.js with Emscripten](https://willowtreeapps.com/ideas/how-to-use-native-libraries-on-node-js-with-emscripten)
+
+### Marshaling
+
 - [Interop with Native Libraries](https://www.mono-project.com/docs/advanced/pinvoke/#manual-marshaling)
 - [unity-native-array](https://github.com/keijiro/unity-native-array) by keijiro - example with array marshaling
+- [Unity c++ Native Plugin Examples](https://bravenewmethod.com/2017/10/30/unity-c-native-plugin-examples/)
 
 ## Todo
 
