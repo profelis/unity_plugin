@@ -7,10 +7,11 @@ Native plugin for "all" unity targets with shared c++ code.
 - Supports macOS (+editor), Windows (+UWP) (+editor), iOS, Android, WebGL
 - Simple and clear build process
 - Shared c++ code
-- Shared Objective-C shared code for ios, mac targets
-- Shared Swift code for ios, mac targets
+- Shared Objective-C code for ios and mac targets
+- Shared Swift code for ios and mac targets
 - Debug/Release configuration
-- Source code sample for iOS target (useful for debug)
+- Raw source code sample for iOS/WebGL target (useful for debug)
+- Marshaling samples (strings, arrays, structs), manual marshaling
 
 ## Compiling
 
