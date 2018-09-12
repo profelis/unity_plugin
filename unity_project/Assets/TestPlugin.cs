@@ -66,6 +66,18 @@ public class TestPlugin : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     static extern void WriteVector3Array(IntPtr array, int length);
 
+    [DllImport(PLUGIN_NAME)]
+    public static extern float PassVector3ByValue(Vector3 s);
+
+    [DllImport(PLUGIN_NAME)]
+    public static extern float PassVector3ByRefIn(ref Vector3 s);
+
+    [DllImport(PLUGIN_NAME)]
+    public static extern void PassVector3ByRefOut(out Vector3 s); // [Out] for classes
+
+    [DllImport(PLUGIN_NAME)]
+    public static extern void PassVector3ByRefInOut(ref Vector3 s); // [In, Out] for classes
+
 #if UNITY_EDITOR_OSX || UNITY_IOS || UNITY_STANDALONE_OSX
     [DllImport(PLUGIN_NAME)]
     static extern int objc_abs(int a);
@@ -147,5 +159,23 @@ public class TestPlugin : MonoBehaviour
         vector3ArrayHandle.Free();
 
         Label.text += "Arrays test ended\n";
+
+        Label.text += "Structs test start:\n";
+        var len = PassVector3ByValue(Vector3.one);
+        Label.text += string.Format("Vector3.one len: {0} correct: {1}\n", len, Mathf.Approximately(len, Vector3.one.magnitude));
+
+        var vec = Vector3.one;
+        var len2 = PassVector3ByRefIn(ref vec);
+        Label.text += string.Format("ref Vector3.one len: {0} correct: {1}\n", len2, Mathf.Approximately(len2, Vector3.one.magnitude));
+
+        var vec2 = Vector3.zero;
+        PassVector3ByRefOut(out vec2);
+        Label.text += string.Format("out Vector3.zero : {0} correct: {1}\n", vec2, Mathf.Approximately(vec2.magnitude, Vector3.one.magnitude));
+
+        var vec3 = Vector3.one;
+        PassVector3ByRefInOut(ref vec3);
+        Label.text += string.Format("int out Vector3.one : {0} correct: {1}\n", vec3, Mathf.Approximately(vec3.magnitude, (Vector3.one * 2).magnitude));
+
+        Label.text += "Structs test ended\n";
     }
 }

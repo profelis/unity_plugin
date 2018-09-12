@@ -28,6 +28,7 @@
 
 #include <cstring>
 #include <cassert>
+#include <cmath>
 #include "MathUtils.h"
 #include "sample.h"
 
@@ -76,4 +77,28 @@ extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API WriteVector3Array(Vec
     array[0] = Vector3{1, 0, 0};
     array[1] = Vector3{0, 1, 0};
     array[2] = Vector3{0, 0, 1};
+}
+
+extern "C" float UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PassVector3ByValue(Vector3 vector)
+{
+    return sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+}
+
+extern "C" float UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PassVector3ByRefIn(Vector3* vector)
+{
+    return sqrt(vector->x * vector->x + vector->y * vector->y + vector->z * vector->z);
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PassVector3ByRefOut(Vector3* vector)
+{
+    vector->x = 1;
+    vector->y = 1;
+    vector->z = 1;
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PassVector3ByRefInOut(Vector3* vector)
+{
+    vector->x *= 2;
+    vector->y *= 2;
+    vector->z *= 2;
 }
